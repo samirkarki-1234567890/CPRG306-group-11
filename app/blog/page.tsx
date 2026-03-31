@@ -6,24 +6,41 @@ export default function BlogPage() {
     <div className="min-h-screen bg-[#222831] flex flex-col">
       {/* --- NAVIGATION BAR --- */}
       <nav className="w-full py-5 px-8 flex justify-between items-center bg-[#393E46]/50 backdrop-blur-md sticky top-0 z-50 border-b border-[#00ADB5]/20">
-        <Link
-          href="/"
-          className="text-2xl font-black text-[#EEEEEE] tracking-tighter hover:opacity-80 transition-opacity"
-        >
+        <div className="text-2xl font-black text-[#EEEEEE] tracking-tighter">
           FIT<span className="text-[#00ADB5]">TRACK</span>
-        </Link>
-        <div className="flex space-x-6 items-center">
+        </div>
+
+        <div className="hidden md:flex space-x-8 items-center">
           <Link
-            href="/about-us"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors text-sm font-bold uppercase tracking-widest"
+            href="/features"
+            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
           >
-            About
+            Membership
           </Link>
           <Link
-            href="/signup"
-            className="bg-[#00ADB5] text-[#222831] px-4 py-2 rounded font-black text-xs"
+            href="/blog"
+            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
           >
-            JOIN NOW
+            Blog
+          </Link>
+          <Link
+            href="/community"
+            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
+          >
+            Community
+          </Link>
+          <Link
+            href="/about-us"
+            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
+          >
+            About Us
+          </Link>
+
+          <Link
+            href="/login"
+            className="border border-[#00ADB5] text-[#00ADB5] px-5 py-2 rounded-md hover:bg-[#00ADB5] hover:text-[#222831] transition-all font-bold"
+          >
+            Login
           </Link>
         </div>
       </nav>
