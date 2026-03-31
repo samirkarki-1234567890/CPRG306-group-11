@@ -7,7 +7,7 @@ export default function BlogPage() {
       {/* --- NAVIGATION BAR --- */}
       <nav className="w-full py-5 px-8 flex justify-between items-center bg-[#393E46]/50 backdrop-blur-md sticky top-0 z-50 border-b border-[#00ADB5]/20">
         <div className="text-2xl font-black text-[#EEEEEE] tracking-tighter">
-          FIT<span className="text-[#00ADB5]">TRACK</span>
+          <Link href="/">FIT<span className="text-[#00ADB5]">TRACK</span></Link>
         </div>
 
         <div className="hidden md:flex space-x-8 items-center">

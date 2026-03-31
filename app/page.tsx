@@ -66,7 +66,7 @@ export default function Home() {
           </p>
 
           <Link
-            href="/signup"
+            href="/sign-up"
             className="inline-block px-12 py-4 bg-[#00ADB5] text-[#222831] font-black text-lg rounded-md hover:bg-[#00cedb] hover:-translate-y-1 transition-all shadow-[0_0_20px_rgba(0,173,181,0.3)]"
           >
             START YOUR JOURNEY
