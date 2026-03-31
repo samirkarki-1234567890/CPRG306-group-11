@@ -27,7 +27,7 @@ export default function LoginPage() {
             <input 
               type="email" 
               className="w-full bg-[#222831] border border-[#EEEEEE]/10 rounded-md py-3 px-4 text-[#EEEEEE] focus:outline-none focus:border-[#00ADB5] transition-colors"
-              placeholder="name@example.com"
+              placeholder="name@mail.com"
             />
           </div>
 
@@ -36,7 +36,7 @@ export default function LoginPage() {
             <input 
               type="password" 
               className="w-full bg-[#222831] border border-[#EEEEEE]/10 rounded-md py-3 px-4 text-[#EEEEEE] focus:outline-none focus:border-[#00ADB5] transition-colors"
-              placeholder="••••••••"
+              placeholder="Abcdef@123"
             />
           </div>
 
