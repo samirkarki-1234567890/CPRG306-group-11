@@ -6,15 +6,11 @@ export async function GET(request) {
 
   try {
     const response = await fetch(
-      `https://trackapi.nutritionix.com/v2/natural/nutrients`,
+      `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${query}&search_simple=1&action=process&json=1&page_size=5`,
       {
-        method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "x-app-id": process.env.NUTRITIONIX_APP_ID,
-          "x-app-key": process.env.NUTRITIONIX_APP_KEY,
-        },
-        body: JSON.stringify({ query }),
+          "User-Agent": "FitTrack/1.0"
+        }
       }
     );
     const data = await response.json();
@@ -23,14 +19,3 @@ export async function GET(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-```
-
----
-
-### 5. Add API keys to `.env.local`
-
-Open your `.env.local` file and add these two new lines at the bottom:
-```
-RAPIDAPI_KEY=your_rapidapi_key_here
-NUTRITIONIX_APP_ID=your_nutritionix_app_id_here
-NUTRITIONIX_APP_KEY=your_nutritionix_app_key_here
