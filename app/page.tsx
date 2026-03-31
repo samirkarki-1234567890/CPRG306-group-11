@@ -18,10 +18,10 @@ export default function Home() {
             Membership
           </Link>
           <Link
-            href="/pricing"
+            href="/blog"
             className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
           >
-            Pricing
+            Blog
           </Link>
           <Link
             href="/community"
