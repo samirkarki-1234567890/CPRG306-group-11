@@ -51,7 +51,7 @@ export default function LoginPage() {
         <div className="relative z-10 mt-8 text-center">
           <p className="text-[#EEEEEE]/60 text-sm">
             Don't have an account?{" "}
-            <Link href="/signup" className="text-[#00ADB5] font-bold hover:underline">Sign Up</Link>
+            <Link href="/sign-up" className="text-[#00ADB5] font-bold hover:underline">Sign Up</Link>
           </p>
         </div>
       </div>
