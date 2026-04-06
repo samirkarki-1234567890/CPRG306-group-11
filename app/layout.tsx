@@ -1,3 +1,4 @@
+// @ts-ignore: allow global CSS side-effect import
 import "./globals.css";
 import React from "react";
 
