@@ -45,14 +45,14 @@ export default function MembershipPage() {
     <div className="min-h-screen bg-[#222831] flex flex-col">
       {/* NAVBAR */}
       <nav className="w-full py-5 px-8 flex justify-between items-center bg-[#393E46]/50 backdrop-blur-md sticky top-0 z-50 border-b border-[#00ADB5]/20">
-        <div className="text-2xl font-black text-[#EEEEEE] tracking-tighter">
+        <Link href="/" className="text-2xl font-black text-[#EEEEEE] tracking-tighter">
           FIT<span className="text-[#00ADB5]">TRACK</span>
-        </div>
+        </Link>
 
         <div className="hidden md:flex space-x-8 items-center">
           <Link
             href="/features"
-            className="text-[#00ADB5] font-bold transition-colors"
+            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
           >
             Membership
           </Link>
@@ -63,10 +63,10 @@ export default function MembershipPage() {
             Blog
           </Link>
           <Link
-            href="/community"
+            href="/health-community"
             className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
           >
-            Community
+            Health & Community
           </Link>
           <Link
             href="/about-us"
@@ -74,6 +74,7 @@ export default function MembershipPage() {
           >
             About Us
           </Link>
+
           <Link
             href="/login"
             className="border border-[#00ADB5] text-[#00ADB5] px-5 py-2 rounded-md hover:bg-[#00ADB5] hover:text-[#222831] transition-all font-bold"
