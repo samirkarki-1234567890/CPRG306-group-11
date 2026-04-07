@@ -27,7 +27,7 @@ export default function Home() {
             href="/community"
             className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
           >
-            Community
+            Health & Community
           </Link>
           <Link
             href="/about-us"
