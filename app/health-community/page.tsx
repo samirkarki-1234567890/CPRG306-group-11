@@ -130,6 +130,17 @@ export default function HealthCommunity() {
             </p>
           </div>
         </div>
+        <div className="mt-12 text-center">
+            <Link href="/exercises" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors">
+              View Recommended Exercises
+            </Link>
+            <Link href="/nutrition" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors ml-6">
+              View Nutrition Tips
+            </Link>
+            <Link href="/workouts" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors ml-6">
+              View Workouts Strategies
+            </Link>
+        </div>
       </main>
       {/* --- FOOTER (Original Styling Maintained) --- */}
       <footer className="bg-[#1A1F26] border-t border-[#00ADB5]/10 pt-16 pb-8 px-8">
