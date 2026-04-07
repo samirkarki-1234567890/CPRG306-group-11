@@ -79,6 +79,50 @@ export default function Home() {
           </div>
         </div>
       </main>
+      {/* --- FOOTER (Original Styling Maintained) --- */}
+      <footer className="bg-[#1A1F26] border-t border-[#00ADB5]/10 pt-16 pb-8 px-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          <div className="space-y-4">
+            <div className="text-3xl font-black text-[#EEEEEE] tracking-tighter">
+              FIT<span className="text-[#00ADB5]">TRACK</span>
+            </div>
+            <p className="text-[#EEEEEE]/50 font-light text-sm max-w-xs">
+              123 Iron Avenue, Muscle District
+              <br />
+              Steel City, SC 56789
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
+              Connect
+            </h4>
+            <div className="flex flex-col space-y-2 text-[#EEEEEE]/70 font-medium text-sm">
+              <a href="tel:+15551234567" className="hover:text-[#00ADB5] transition-colors">+1 (555) 123-4567</a>
+              <a href="mailto:hello@fittrack.com" className="hover:text-[#00ADB5] transition-colors">hello@fittrack.com</a>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
+              Follow Us
+            </h4>
+            <div className="flex space-x-6">
+              {['IG', 'TW', 'FB', 'YT'].map(social => (
+                <Link key={social} href="#" className="text-[#EEEEEE]/50 hover:text-[#00ADB5] transition-all font-bold text-sm">
+                  {social}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center pt-8 border-t border-[#EEEEEE]/5">
+          <p className="text-[#EEEEEE]/20 text-[10px] uppercase tracking-[0.2em]">
+            © 2026 FITTRACK INTERACTIVE • DESIGNED FOR PERFORMANCE
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
