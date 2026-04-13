@@ -85,6 +85,9 @@ export default function HealthCommunity() {
           {/* RIGHT: SPRINT TABLE */}
           <div className="lg:col-span-2 bg-[#393E46] p-8 rounded-2xl shadow-2xl border border-white/5">
             <h2 className="text-2xl font-bold mb-8">Weekly Sprint Protocol</h2>
+            <Link href="#bottom-cta" className="inline-block mb-6 px-10 py-3 bg-[#00ADB5] text-[#222831] font-black text-sm rounded-md hover:bg-[#00cedb] transition-all shadow-[0_0_20px_rgba(0,173,181,0.2)] uppercase">
+              Choose Your Plan
+            </Link>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -130,7 +133,7 @@ export default function HealthCommunity() {
             </p>
           </div>
         </div>
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center" id='bottom-cta'>
             <Link href="/exercises" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors">
               View Recommended Exercises
             </Link>
