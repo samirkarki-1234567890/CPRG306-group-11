@@ -4,46 +4,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
-      {/* --- NAVIGATION BAR --- */}
-      <nav className="w-full py-5 px-8 flex justify-between items-center bg-[#393E46]/50 backdrop-blur-md sticky top-0 z-50 border-b border-[#00ADB5]/20">
-        <div className="text-2xl font-black text-[#EEEEEE] tracking-tighter">
-          FIT<span className="text-[#00ADB5]">TRACK</span>
-        </div>
-
-        <div className="hidden md:flex space-x-8 items-center">
-          <Link
-            href="/features"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Membership
-          </Link>
-          <Link
-            href="/blog"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/health-community"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Health & Community
-          </Link>
-          <Link
-            href="/about-us"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            About Us
-          </Link>
-
-          <Link
-            href="/login"
-            className="border border-[#00ADB5] text-[#00ADB5] px-5 py-2 rounded-md hover:bg-[#00ADB5] hover:text-[#222831] transition-all font-bold"
-          >
-            Login
-          </Link>
-        </div>
-      </nav>
 
       {/* --- MAIN SECTION --- */}
       <main
@@ -52,7 +12,6 @@ export default function Home() {
           backgroundImage: `linear-gradient(rgba(34, 40, 49, 0.7), rgba(34, 40, 49, 0.9)), url('/background.jpg')`,
         }}
       >
-        {/* The card now uses a solid or semi-transparent color to stand out from the new page background */}
         <div className="bg-[#393E46]/80 backdrop-blur-sm p-12 rounded-2xl shadow-2xl text-center max-w-3xl border-b-4 border-[#00ADB5]">
           <h1 className="text-6xl md:text-8xl font-black mb-6 text-[#EEEEEE] tracking-tight">
             FIT<span className="text-[#00ADB5]"> TRACK</span>
@@ -79,7 +38,8 @@ export default function Home() {
           </div>
         </div>
       </main>
-      {/* --- FOOTER (Original Styling Maintained) --- */}
+
+      {/* --- FOOTER --- */}
       <footer className="bg-[#1A1F26] border-t border-[#00ADB5]/10 pt-16 pb-8 px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div className="space-y-4">
@@ -94,9 +54,7 @@ export default function Home() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
-              Connect
-            </h4>
+            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">Connect</h4>
             <div className="flex flex-col space-y-2 text-[#EEEEEE]/70 font-medium text-sm">
               <a href="tel:+15551234567" className="hover:text-[#00ADB5] transition-colors">+1 (555) 123-4567</a>
               <a href="mailto:hello@fittrack.com" className="hover:text-[#00ADB5] transition-colors">hello@fittrack.com</a>
@@ -104,9 +62,7 @@ export default function Home() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
-              Follow Us
-            </h4>
+            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">Follow Us</h4>
             <div className="flex space-x-6">
               {['IG', 'TW', 'FB', 'YT'].map(social => (
                 <Link key={social} href="#" className="text-[#EEEEEE]/50 hover:text-[#00ADB5] transition-all font-bold text-sm">

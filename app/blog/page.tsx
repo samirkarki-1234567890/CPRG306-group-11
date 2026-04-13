@@ -4,46 +4,6 @@ import Link from "next/link";
 export default function BlogPage() {
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
-      {/* --- NAVIGATION BAR --- */}
-      <nav className="w-full py-5 px-8 flex justify-between items-center bg-[#393E46]/50 backdrop-blur-md sticky top-0 z-50 border-b border-[#00ADB5]/20">
-        <div className="text-2xl font-black text-[#EEEEEE] tracking-tighter">
-          <Link href="/">FIT<span className="text-[#00ADB5]">TRACK</span></Link>
-        </div>
-
-        <div className="hidden md:flex space-x-8 items-center">
-          <Link
-            href="/features"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Membership
-          </Link>
-          <Link
-            href="/blog"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/health-community"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Health & Community
-          </Link>
-          <Link
-            href="/about-us"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            About Us
-          </Link>
-
-          <Link
-            href="/login"
-            className="border border-[#00ADB5] text-[#00ADB5] px-5 py-2 rounded-md hover:bg-[#00ADB5] hover:text-[#222831] transition-all font-bold"
-          >
-            Login
-          </Link>
-        </div>
-      </nav>
 
       {/* --- HERO / BLOG SECTION --- */}
       <main className="p-8 md:p-20">
@@ -52,8 +12,7 @@ export default function BlogPage() {
             LATEST <span className="text-[#00ADB5]">INSIGHTS</span>
           </h1>
           <p className="text-[#EEEEEE]/50 max-w-xl font-light">
-            Expert advice on nutrition, recovery, and hitting your personal
-            bests.
+            Expert advice on nutrition, recovery, and hitting your personal bests.
           </p>
         </header>
 
@@ -115,34 +74,16 @@ export default function BlogPage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              {
-                name: "Alex R.",
-                text: "FitTrack changed how I view progress. The data doesn't lie.",
-              },
-              {
-                name: "Sarah J.",
-                text: "The community here is unmatched. Best gym environment in the city.",
-              },
-              {
-                name: "Mike D.",
-                text: "Clean equipment, elite coaches, and the tracking app is flawless.",
-              },
+              { name: "Alex R.", text: "FitTrack changed how I view progress. The data doesn't lie." },
+              { name: "Sarah J.", text: "The community here is unmatched. Best gym environment in the city." },
+              { name: "Mike D.", text: "Clean equipment, elite coaches, and the tracking app is flawless." },
             ].map((review, i) => (
-              <div
-                key={i}
-                className="bg-[#393E46] p-8 rounded-2xl relative shadow-xl"
-              >
-                <div className="text-[#00ADB5] text-4xl font-serif absolute top-4 left-4 opacity-20">
-                  “
-                </div>
-                <p className="text-[#EEEEEE]/80 italic font-light mb-6 relative z-10">
-                  {review.text}
-                </p>
+              <div key={i} className="bg-[#393E46] p-8 rounded-2xl relative shadow-xl">
+                <div className="text-[#00ADB5] text-4xl font-serif absolute top-4 left-4 opacity-20">"</div>
+                <p className="text-[#EEEEEE]/80 italic font-light mb-6 relative z-10">{review.text}</p>
                 <div className="flex items-center gap-3">
                   <div className="h-1 w-8 bg-[#00ADB5]"></div>
-                  <span className="text-[#EEEEEE] font-black text-sm uppercase tracking-widest">
-                    {review.name}
-                  </span>
+                  <span className="text-[#EEEEEE] font-black text-sm uppercase tracking-widest">{review.name}</span>
                 </div>
               </div>
             ))}
@@ -150,7 +91,7 @@ export default function BlogPage() {
         </section>
       </main>
 
-      {/* --- FOOTER (Original Styling Maintained) --- */}
+      {/* FOOTER */}
       <footer className="bg-[#1A1F26] border-t border-[#00ADB5]/10 pt-16 pb-8 px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div className="space-y-4">
@@ -165,9 +106,7 @@ export default function BlogPage() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
-              Connect
-            </h4>
+            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">Connect</h4>
             <div className="flex flex-col space-y-2 text-[#EEEEEE]/70 font-medium text-sm">
               <a href="tel:+15551234567" className="hover:text-[#00ADB5] transition-colors">+1 (555) 123-4567</a>
               <a href="mailto:hello@fittrack.com" className="hover:text-[#00ADB5] transition-colors">hello@fittrack.com</a>
@@ -175,9 +114,7 @@ export default function BlogPage() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
-              Follow Us
-            </h4>
+            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">Follow Us</h4>
             <div className="flex space-x-6">
               {['IG', 'TW', 'FB', 'YT'].map(social => (
                 <Link key={social} href="#" className="text-[#EEEEEE]/50 hover:text-[#00ADB5] transition-all font-bold text-sm">

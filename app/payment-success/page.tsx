@@ -12,44 +12,6 @@ export default function PaymentSuccessPage() {
 
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
-      <nav className="w-full py-5 px-8 flex justify-between items-center bg-[#393E46]/50 backdrop-blur-md sticky top-0 z-50 border-b border-[#00ADB5]/20">
-        <Link href="/" className="text-2xl font-black text-[#EEEEEE] tracking-tighter">
-          FIT<span className="text-[#00ADB5]">TRACK</span>
-        </Link>
-
-        <div className="hidden md:flex space-x-8 items-center">
-          <Link
-            href="/features"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Membership
-          </Link>
-          <Link
-            href="/blog"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/health-community"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            Health & Community
-          </Link>
-          <Link
-            href="/about-us"
-            className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium"
-          >
-            About Us
-          </Link>
-          <Link
-            href="/login"
-            className="border border-[#00ADB5] text-[#00ADB5] px-5 py-2 rounded-md hover:bg-[#00ADB5] hover:text-[#222831] transition-all font-bold"
-          >
-            Login
-          </Link>
-        </div>
-      </nav>
 
       <main
         className="flex-grow flex items-center justify-center px-6 py-20 bg-cover bg-center bg-no-repeat"
@@ -76,12 +38,10 @@ export default function PaymentSuccessPage() {
               <span className="text-[#EEEEEE]/70">Selected Plan</span>
               <span className="text-[#EEEEEE] font-bold">{selectedPlan}</span>
             </div>
-
             <div className="flex justify-between items-center">
               <span className="text-[#EEEEEE]/70">Billing</span>
               <span className="text-[#EEEEEE] font-bold">Monthly</span>
             </div>
-
             <div className="flex justify-between items-center border-t border-[#EEEEEE]/10 pt-4">
               <span className="text-[#EEEEEE] font-black text-lg">Amount Paid</span>
               <span className="text-[#00ADB5] font-black text-2xl">{selectedPrice}</span>
@@ -95,7 +55,6 @@ export default function PaymentSuccessPage() {
             >
               GO TO HOME
             </Link>
-
             <Link
               href="/features"
               className="px-8 py-4 border border-[#00ADB5] text-[#00ADB5] font-black rounded-md hover:bg-[#00ADB5] hover:text-[#222831] transition-all"

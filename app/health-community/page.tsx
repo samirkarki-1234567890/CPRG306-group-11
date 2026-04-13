@@ -24,24 +24,10 @@ export default function HealthCommunity() {
 
   return (
     <div className="min-h-screen bg-[#222831] text-[#EEEEEE]">
-      {/* --- FIXED NAVIGATION BAR --- */}
-      <nav className="fixed top-0 w-full py-5 px-10 flex justify-between items-center bg-[#393E46]/80 backdrop-blur-md z-50 border-b border-[#00ADB5]/20">
-        <Link href="/" className="text-2xl font-black text-[#EEEEEE] tracking-tighter">
-          FIT<span className="text-[#00ADB5]">TRACK</span>
-        </Link>
-
-        <div className="hidden md:flex space-x-8 items-center">
-          <Link href="/features" className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium text-sm uppercase tracking-wider">Membership</Link>
-          <Link href="/blog" className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium text-sm uppercase tracking-wider">Blog</Link>
-          <Link href="/health-community" className="text-[#00ADB5] transition-colors font-bold text-sm uppercase tracking-wider">Health & Community</Link>
-          <Link href="/about-us" className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors font-medium text-sm uppercase tracking-wider">About Us</Link>
-          <Link href="/login" className="border border-[#00ADB5] text-[#00ADB5] px-6 py-2 rounded-md hover:bg-[#00ADB5] hover:text-[#222831] transition-all font-bold text-sm">LOGIN</Link>
-        </div>
-      </nav>
 
       {/* --- MAIN CONTENT WRAPPER --- */}
-      <main className="max-w-7xl mx-auto px-6 pt-32 pb-20">
-        
+      <main className="max-w-7xl mx-auto px-6 pt-10 pb-20">
+
         {/* HEADER SECTION */}
         <div className="mb-16">
           <h1 className="text-5xl md:text-7xl font-black border-l-8 border-[#00ADB5] pl-6 uppercase tracking-tighter leading-none">
@@ -51,7 +37,7 @@ export default function HealthCommunity() {
 
         {/* TOP GRID: BMI & PROTOCOL */}
         <div className="grid lg:grid-cols-3 gap-10 mb-10">
-          
+
           {/* LEFT: BMI CALCULATOR */}
           <div className="bg-[#393E46] p-8 rounded-2xl shadow-2xl border border-white/5 flex flex-col justify-between">
             <div>
@@ -67,11 +53,11 @@ export default function HealthCommunity() {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-8">
               <button onClick={calculateBMI} className="w-full bg-[#00ADB5] text-[#222831] font-black py-4 rounded-lg hover:bg-[#00cedb] transition shadow-[0_0_20px_rgba(0,173,181,0.2)] uppercase">Calculate BMI</button>
               {bmi && (
-                <div className="mt-6 p-5 bg-[#222831] rounded-xl text-center border-t-2 border-[#00ADB5] animate-in fade-in zoom-in duration-300">
+                <div className="mt-6 p-5 bg-[#222831] rounded-xl text-center border-t-2 border-[#00ADB5]">
                   <p className="text-xs uppercase font-bold opacity-40 mb-1">Your Result</p>
                   <p className="text-5xl font-black text-[#00ADB5]">{bmi}</p>
                   <p className="text-sm mt-2 font-bold text-[#EEEEEE]/60 uppercase tracking-widest">
@@ -128,24 +114,26 @@ export default function HealthCommunity() {
           <div className="bg-[#393E46] p-8 rounded-2xl border-l-8 border-[#00ADB5] shadow-xl">
             <h3 className="text-2xl font-black mb-4 text-[#00ADB5] uppercase italic">Hydration Strategy</h3>
             <p className="text-[#EEEEEE]/70 leading-relaxed text-lg">
-              Daily Baseline: <span className="text-white font-bold underline decoration-[#00ADB5]">3.7L (Men)</span> / <span className="text-white font-bold underline decoration-[#00ADB5]">2.7L (Women)</span>. 
+              Daily Baseline: <span className="text-white font-bold underline decoration-[#00ADB5]">3.7L (Men)</span> / <span className="text-white font-bold underline decoration-[#00ADB5]">2.7L (Women)</span>.
               Add 500ml per 45min of high-intensity sweat.
             </p>
           </div>
         </div>
-        <div className="mt-12 text-center" id='bottom-cta'>
-            <Link href="/exercises" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors">
-              View Recommended Exercises
-            </Link>
-            <Link href="/nutrition" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors ml-6">
-              View Nutrition Tips
-            </Link>
-            <Link href="/workouts" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors ml-6">
-              View Workouts Strategies
-            </Link>
+
+        <div className="mt-12 text-center" id="bottom-cta">
+          <Link href="/exercises" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors">
+            View Recommended Exercises
+          </Link>
+          <Link href="/nutrition" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors ml-6">
+            View Nutrition Tips
+          </Link>
+          <Link href="/workouts" className="text-[#00ADB5] hover:text-[#00cedb] transition-colors ml-6">
+            View Workouts Strategies
+          </Link>
         </div>
       </main>
-      {/* --- FOOTER (Original Styling Maintained) --- */}
+
+      {/* FOOTER */}
       <footer className="bg-[#1A1F26] border-t border-[#00ADB5]/10 pt-16 pb-8 px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div className="space-y-4">

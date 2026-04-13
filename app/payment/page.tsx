@@ -8,17 +8,14 @@ export default function PaymentPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // ===== GET PLAN FROM URL =====
   const selectedPlan = searchParams.get("plan") || "PRO";
   const selectedPrice = searchParams.get("price") || "$39";
 
-  // ===== PRICE + TAX CALCULATION =====
   const priceNumber = Number(selectedPrice.replace("$", ""));
-  const taxRate = 0.05; // 5% GST
+  const taxRate = 0.05;
   const taxAmount = (priceNumber * taxRate).toFixed(2);
   const totalAmount = (priceNumber + Number(taxAmount)).toFixed(2);
 
-  // ===== FORM STATE =====
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [cardNumber, setCardNumber] = useState("");
@@ -26,7 +23,6 @@ export default function PaymentPage() {
   const [cvv, setCvv] = useState("");
   const [cardholderName, setCardholderName] = useState("");
 
-  // ===== ERROR STATE =====
   const [errors, setErrors] = useState<{
     fullName?: string;
     email?: string;
@@ -36,9 +32,6 @@ export default function PaymentPage() {
     cardholderName?: string;
   }>({});
 
-  // ===== INPUT FORMATTING FUNCTIONS =====
-
-  // Only allow letters for names
   const handleNameChange = (
     value: string,
     setter: React.Dispatch<React.SetStateAction<string>>
@@ -46,13 +39,11 @@ export default function PaymentPage() {
     setter(value.replace(/[^a-zA-Z\s]/g, ""));
   };
 
-  // Format card number (XXXX XXXX XXXX XXXX)
   const handleCardNumberChange = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 16);
     setCardNumber(digits.replace(/(\d{4})(?=\d)/g, "$1 "));
   };
 
-  // Format expiry date (MM/YY)
   const handleExpiryDateChange = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 4);
     setExpiryDate(
@@ -62,67 +53,45 @@ export default function PaymentPage() {
     );
   };
 
-  // Only 3 digit CVV
   const handleCvvChange = (value: string) => {
     setCvv(value.replace(/\D/g, "").slice(0, 3));
   };
 
-  // ===== VALIDATION LOGIC =====
   const validateForm = () => {
     const newErrors: any = {};
-
     if (!fullName.trim()) newErrors.fullName = "Full name is required";
-
     if (!email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^\S+@\S+\.\S+$/.test(email)) {
       newErrors.email = "Invalid email format";
     }
-
     if (cardNumber.replace(/\s/g, "").length !== 16) {
       newErrors.cardNumber = "Card must be 16 digits";
     }
-
     if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
       newErrors.expiryDate = "Format MM/YY";
     }
-
     if (cvv.length !== 3) {
       newErrors.cvv = "CVV must be 3 digits";
     }
-
     if (!cardholderName.trim()) {
       newErrors.cardholderName = "Cardholder name required";
     }
-
     setErrors(newErrors);
-
-    // return true if no errors
     return Object.keys(newErrors).length === 0;
   };
 
-  // ===== FORM SUBMIT =====
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (validateForm()) {
-      // Redirect to success page with final price
       router.push(
-        `/payment-success?plan=${encodeURIComponent(
-          selectedPlan
-        )}&price=${encodeURIComponent(`$${totalAmount}`)}`
+        `/payment-success?plan=${encodeURIComponent(selectedPlan)}&price=${encodeURIComponent(`$${totalAmount}`)}`
       );
     }
   };
 
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
-      {/* ===== NAVBAR ===== */}
-      <nav className="w-full py-5 px-8 flex justify-between items-center bg-[#393E46]/50 backdrop-blur-md border-b border-[#00ADB5]/20">
-        <Link href="/" className="text-2xl font-black text-[#EEEEEE]">
-          FIT<span className="text-[#00ADB5]">TRACK</span>
-        </Link>
-      </nav>
 
       {/* ===== MAIN CONTENT ===== */}
       <main
@@ -136,48 +105,37 @@ export default function PaymentPage() {
 
           {/* ===== ORDER SUMMARY ===== */}
           <div className="bg-[#393E46]/85 rounded-2xl p-8 border-l-4 border-[#00ADB5]">
-            <h2 className="text-3xl font-black text-[#00ADB5] mb-6">
-              ORDER SUMMARY
-            </h2>
-
+            <h2 className="text-3xl font-black text-[#00ADB5] mb-6">ORDER SUMMARY</h2>
             <div className="bg-[#222831]/70 rounded-xl p-6 space-y-5">
               <div className="flex justify-between">
                 <span className="text-[#EEEEEE]/70">Plan</span>
                 <span className="text-[#EEEEEE]">{selectedPlan}</span>
               </div>
-
               <div className="flex justify-between">
                 <span className="text-[#EEEEEE]/70">Fee</span>
                 <span className="text-[#EEEEEE]">${priceNumber}</span>
               </div>
-
               <div className="flex justify-between">
                 <span className="text-[#EEEEEE]/70">GST (5%)</span>
                 <span className="text-[#EEEEEE]">${taxAmount}</span>
               </div>
-
               <div className="border-t pt-4 flex justify-between">
                 <span className="text-[#EEEEEE] font-bold">TOTAL</span>
-                <span className="text-[#00ADB5] text-2xl font-black">
-                  ${totalAmount}
-                </span>
+                <span className="text-[#00ADB5] text-2xl font-black">${totalAmount}</span>
               </div>
             </div>
           </div>
 
           {/* ===== PAYMENT FORM ===== */}
           <div className="bg-[#393E46]/85 rounded-2xl p-8 border-l-4 border-[#00ADB5]/70">
-            <h2 className="text-3xl font-black text-[#00ADB5] mb-6">
-              PAYMENT DETAILS
-            </h2>
+            <h2 className="text-3xl font-black text-[#00ADB5] mb-6">PAYMENT DETAILS</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-
               <input
                 value={fullName}
                 onChange={(e) => handleNameChange(e.target.value, setFullName)}
                 placeholder="Full Name"
-                className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md"
+                className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
               />
               {errors.fullName && <p className="text-red-400 text-sm">{errors.fullName}</p>}
 
@@ -185,7 +143,7 @@ export default function PaymentPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md"
+                className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
               />
               {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
 
@@ -193,7 +151,7 @@ export default function PaymentPage() {
                 value={cardNumber}
                 onChange={(e) => handleCardNumberChange(e.target.value)}
                 placeholder="1234 5678 9012 3456"
-                className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md"
+                className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
               />
               {errors.cardNumber && <p className="text-red-400 text-sm">{errors.cardNumber}</p>}
 
@@ -202,13 +160,13 @@ export default function PaymentPage() {
                   value={expiryDate}
                   onChange={(e) => handleExpiryDateChange(e.target.value)}
                   placeholder="MM/YY"
-                  className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md"
+                  className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
                 />
                 <input
                   value={cvv}
                   onChange={(e) => handleCvvChange(e.target.value)}
                   placeholder="CVV"
-                  className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md"
+                  className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
                 />
               </div>
 
@@ -217,23 +175,19 @@ export default function PaymentPage() {
 
               <input
                 value={cardholderName}
-                onChange={(e) =>
-                  handleNameChange(e.target.value, setCardholderName)
-                }
+                onChange={(e) => handleNameChange(e.target.value, setCardholderName)}
                 placeholder="Cardholder Name"
-                className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md"
+                className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
               />
-              {errors.cardholderName && (
-                <p className="text-red-400 text-sm">{errors.cardholderName}</p>
-              )}
+              {errors.cardholderName && <p className="text-red-400 text-sm">{errors.cardholderName}</p>}
 
-              <button className="w-full py-4 bg-[#00ADB5] text-[#222831] font-black rounded-md">
+              <button className="w-full py-4 bg-[#00ADB5] text-[#222831] font-black rounded-md hover:bg-[#00cedb] transition-all">
                 PAY ${totalAmount}
               </button>
             </form>
 
             <div className="text-center mt-4">
-              <Link href="/features" className="text-[#EEEEEE]/70">
+              <Link href="/features" className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors">
                 ← Back
               </Link>
             </div>
