@@ -1,37 +1,64 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase";
 
 export default function Navbar() {
+  const [user, setUser] = useState<User | null>(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setCheckingAuth(false);
+      console.log("Navbar auth user:", currentUser?.email || "no user");
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push("/");
+  };
+
   return (
-    <nav className="w-full py-5 px-8 flex justify-between items-center bg-[#393E46]/50 backdrop-blur-md sticky top-0 z-50 border-b border-[#00ADB5]/20">
-      <Link href="/" className="text-2xl font-black text-[#EEEEEE] tracking-tighter hover:text-[#00ADB5] transition-all hover:drop-shadow-[0_0_8px_rgba(0,173,181,0.8)]">
+    <nav className="bg-[#2b3440] px-6 py-4 flex justify-between items-center border-b border-[#00ADB5]/20">
+      <Link href="/" className="text-2xl font-black text-white">
         FIT<span className="text-[#00ADB5]">TRACK</span>
       </Link>
 
-      <div className="hidden md:flex space-x-8 items-center">
-        <Link href="/features" className="text-[#EEEEEE]/70 font-medium transition-all hover:text-[#00ADB5] hover:drop-shadow-[0_0_8px_rgba(0,173,181,0.8)]">
-          Membership
-        </Link>
-        <Link href="/blog" className="text-[#EEEEEE]/70 font-medium transition-all hover:text-[#00ADB5] hover:drop-shadow-[0_0_8px_rgba(0,173,181,0.8)]">
-          Blog
-        </Link>
-        <Link href="/workouts" className="text-[#EEEEEE]/70 font-medium transition-all hover:text-[#00ADB5] hover:drop-shadow-[0_0_8px_rgba(0,173,181,0.8)]">
-          Workouts
-        </Link>
-        <Link href="/exercises" className="text-[#EEEEEE]/70 font-medium transition-all hover:text-[#00ADB5] hover:drop-shadow-[0_0_8px_rgba(0,173,181,0.8)]">
-          Exercises
-        </Link>
-        <Link href="/nutrition" className="text-[#EEEEEE]/70 font-medium transition-all hover:text-[#00ADB5] hover:drop-shadow-[0_0_8px_rgba(0,173,181,0.8)]">
-          Nutrition
-        </Link>
-        <Link href="/health-community" className="text-[#EEEEEE]/70 font-medium transition-all hover:text-[#00ADB5] hover:drop-shadow-[0_0_8px_rgba(0,173,181,0.8)]">
-          Community
-        </Link>
-        <Link href="/about-us" className="text-[#EEEEEE]/70 font-medium transition-all hover:text-[#00ADB5] hover:drop-shadow-[0_0_8px_rgba(0,173,181,0.8)]">
-          About Us
-        </Link>
-        <Link href="/login" className="border border-[#00ADB5] text-[#00ADB5] px-5 py-2 rounded-md font-bold transition-all hover:bg-[#00ADB5] hover:text-[#222831] hover:shadow-[0_0_15px_rgba(0,173,181,0.8)]">
-          Login
-        </Link>
+      <div className="flex items-center gap-6 text-gray-300">
+        <Link href="/features">Membership</Link>
+        <Link href="/blog">Blog</Link>
+        <Link href="/workouts">Workouts</Link>
+        <Link href="/exercises">Exercises</Link>
+        <Link href="/nutrition">Nutrition</Link>
+        <Link href="/health-community">Community</Link>
+        <Link href="/about-us">About Us</Link>
+
+        {checkingAuth ? (
+          <button className="border border-cyan-400 text-cyan-400 px-5 py-1.5 rounded-lg opacity-70">
+            Loading...
+          </button>
+        ) : user ? (
+          <button
+            onClick={handleLogout}
+            className="border border-cyan-400 text-cyan-400 px-5 py-1.5 rounded-lg hover:bg-cyan-400 hover:text-slate-900 transition"
+          >
+            Logout
+          </button>
+        ) : (
+          <Link href="/login">
+            <button className="border border-cyan-400 text-cyan-400 px-5 py-1.5 rounded-lg hover:bg-cyan-400 hover:text-slate-900 transition">
+              Login
+            </button>
+          </Link>
+        )}
       </div>
     </nav>
   );

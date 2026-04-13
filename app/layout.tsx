@@ -1,6 +1,4 @@
-// @ts-ignore: allow global CSS side-effect import
 import "./globals.css";
-import React from "react";
 import Navbar from "./components/Navbar";
 
 export default function RootLayout({

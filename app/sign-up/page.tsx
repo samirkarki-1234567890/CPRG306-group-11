@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -18,31 +19,52 @@ export default function SignUpPage() {
       setError("Please fill in all fields.");
       return;
     }
+
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
       return;
     }
+
     setLoading(true);
     setError("");
+
     try {
-      const auth = getAuth();
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push("/workouts");
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        full_name: name,
+        email: email,
+        createdAt: new Date().toISOString(),
+      });
+
+      router.push("/");
     } catch (err: any) {
+      console.log("SIGN UP ERROR:", err);
+
       if (err.code === "auth/email-already-in-use") {
         setError("This email is already registered. Try logging in.");
       } else if (err.code === "auth/invalid-email") {
         setError("Please enter a valid email address.");
+      } else if (err.code === "auth/weak-password") {
+        setError("Password is too weak.");
       } else {
-        setError("Something went wrong. Please try again.");
+        setError(err.message || "Something went wrong. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col items-center justify-center p-6">
-      <Link href="/" className="mb-10 text-3xl font-black text-[#EEEEEE] tracking-tighter hover:opacity-80 transition-opacity">
+      <Link
+        href="/"
+        className="mb-10 text-3xl font-black text-[#EEEEEE] tracking-tighter hover:opacity-80 transition-opacity"
+      >
         FIT<span className="text-[#00ADB5]">TRACK</span>
       </Link>
 
@@ -101,7 +123,6 @@ export default function SignUpPage() {
             />
           </div>
 
-          {/* Error Message */}
           {error && (
             <p className="text-red-400 text-sm text-center bg-red-400/10 border border-red-400/20 rounded-lg p-3">
               {error}
@@ -120,7 +141,10 @@ export default function SignUpPage() {
         <div className="relative z-10 mt-8 text-center">
           <p className="text-[#EEEEEE]/60 text-sm">
             Already have an account?{" "}
-            <Link href="/login" className="text-[#00ADB5] font-bold hover:underline">
+            <Link
+              href="/login"
+              className="text-[#00ADB5] font-bold hover:underline"
+            >
               Login
             </Link>
           </p>
