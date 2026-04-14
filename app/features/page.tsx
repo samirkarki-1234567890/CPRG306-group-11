@@ -43,7 +43,6 @@ export default function MembershipPage() {
 
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
-
       {/* HERO */}
       <main
         className="flex-grow bg-cover bg-center bg-no-repeat"
@@ -112,7 +111,7 @@ export default function MembershipPage() {
                 </ul>
 
                 <Link
-                  href="/sign-up"
+                  href="/payment"
                   className={`block text-center w-full py-3 rounded-md font-black transition-all ${
                     plan.featured
                       ? "bg-[#00ADB5] text-[#222831] hover:bg-[#00cedb]"
@@ -133,12 +132,12 @@ export default function MembershipPage() {
             READY TO LEVEL UP?
           </h2>
           <p className="text-[#EEEEEE]/75 text-lg max-w-2xl mx-auto mb-10">
-            Join FIT TRACK today and unlock the tools, insights, and support
-            you need to reach your next goal.
+            Join FIT TRACK today and unlock the tools, insights, and support you
+            need to reach your next goal.
           </p>
 
           <Link
-            href="/sign-up"
+            href="/payment"
             className="inline-block px-12 py-4 bg-[#00ADB5] text-[#222831] font-black text-lg rounded-md hover:bg-[#00cedb] hover:-translate-y-1 transition-all shadow-[0_0_20px_rgba(0,173,181,0.3)]"
           >
             START MEMBERSHIP
@@ -165,8 +164,18 @@ export default function MembershipPage() {
               Connect
             </h4>
             <div className="flex flex-col space-y-2 text-[#EEEEEE]/70 font-medium text-sm">
-              <a href="tel:+15551234567" className="hover:text-[#00ADB5] transition-colors">+1 (555) 123-4567</a>
-              <a href="mailto:hello@fittrack.com" className="hover:text-[#00ADB5] transition-colors">hello@fittrack.com</a>
+              <a
+                href="tel:+15551234567"
+                className="hover:text-[#00ADB5] transition-colors"
+              >
+                +1 (555) 123-4567
+              </a>
+              <a
+                href="mailto:hello@fittrack.com"
+                className="hover:text-[#00ADB5] transition-colors"
+              >
+                hello@fittrack.com
+              </a>
             </div>
           </div>
 
@@ -175,8 +184,12 @@ export default function MembershipPage() {
               Follow Us
             </h4>
             <div className="flex space-x-6">
-              {['IG', 'TW', 'FB', 'YT'].map(social => (
-                <Link key={social} href="#" className="text-[#EEEEEE]/50 hover:text-[#00ADB5] transition-all font-bold text-sm">
+              {["IG", "TW", "FB", "YT"].map((social) => (
+                <Link
+                  key={social}
+                  href="#"
+                  className="text-[#EEEEEE]/50 hover:text-[#00ADB5] transition-all font-bold text-sm"
+                >
                   {social}
                 </Link>
               ))}

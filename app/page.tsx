@@ -4,7 +4,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
-
       {/* --- MAIN SECTION --- */}
       <main
         className="flex-grow flex flex-col items-center justify-center p-6 bg-cover bg-center bg-no-repeat"
@@ -25,7 +24,7 @@ export default function Home() {
           </p>
 
           <Link
-            href="/sign-up"
+            href="/features"
             className="inline-block px-12 py-4 bg-[#00ADB5] text-[#222831] font-black text-lg rounded-md hover:bg-[#00cedb] hover:-translate-y-1 transition-all shadow-[0_0_20px_rgba(0,173,181,0.3)]"
           >
             START YOUR JOURNEY
@@ -54,18 +53,36 @@ export default function Home() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">Connect</h4>
+            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
+              Connect
+            </h4>
             <div className="flex flex-col space-y-2 text-[#EEEEEE]/70 font-medium text-sm">
-              <a href="tel:+15551234567" className="hover:text-[#00ADB5] transition-colors">+1 (555) 123-4567</a>
-              <a href="mailto:hello@fittrack.com" className="hover:text-[#00ADB5] transition-colors">hello@fittrack.com</a>
+              <a
+                href="tel:+15551234567"
+                className="hover:text-[#00ADB5] transition-colors"
+              >
+                +1 (555) 123-4567
+              </a>
+              <a
+                href="mailto:hello@fittrack.com"
+                className="hover:text-[#00ADB5] transition-colors"
+              >
+                hello@fittrack.com
+              </a>
             </div>
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">Follow Us</h4>
+            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
+              Follow Us
+            </h4>
             <div className="flex space-x-6">
-              {['IG', 'TW', 'FB', 'YT'].map(social => (
-                <Link key={social} href="#" className="text-[#EEEEEE]/50 hover:text-[#00ADB5] transition-all font-bold text-sm">
+              {["IG", "TW", "FB", "YT"].map((social) => (
+                <Link
+                  key={social}
+                  href="#"
+                  className="text-[#EEEEEE]/50 hover:text-[#00ADB5] transition-all font-bold text-sm"
+                >
                   {social}
                 </Link>
               ))}
