@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessContent() {
   const searchParams = useSearchParams();
 
   const selectedPlan = searchParams.get("plan") || "PRO";
@@ -12,7 +12,6 @@ export default function PaymentSuccessPage() {
 
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
-
       <main
         className="flex-grow flex items-center justify-center px-6 py-20 bg-cover bg-center bg-no-repeat"
         style={{
@@ -43,8 +42,12 @@ export default function PaymentSuccessPage() {
               <span className="text-[#EEEEEE] font-bold">Monthly</span>
             </div>
             <div className="flex justify-between items-center border-t border-[#EEEEEE]/10 pt-4">
-              <span className="text-[#EEEEEE] font-black text-lg">Amount Paid</span>
-              <span className="text-[#00ADB5] font-black text-2xl">{selectedPrice}</span>
+              <span className="text-[#EEEEEE] font-black text-lg">
+                Amount Paid
+              </span>
+              <span className="text-[#00ADB5] font-black text-2xl">
+                {selectedPrice}
+              </span>
             </div>
           </div>
 
@@ -73,5 +76,13 @@ export default function PaymentSuccessPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#222831]" />}>
+      <PaymentSuccessContent />
+    </Suspense>
   );
 }
