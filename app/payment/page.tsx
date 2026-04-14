@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -8,102 +8,99 @@ function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // get selected plan and price from URL
   const selectedPlan = searchParams.get("plan") || "PRO";
-  const selectedPrice = searchParams.get("price") || "$39";
+  const rawPrice = searchParams.get("price") || "$39";
+  const selectedPrice = rawPrice.startsWith("$") ? rawPrice : `$${rawPrice}`;
 
+  // calculate tax and total
   const priceNumber = Number(selectedPrice.replace("$", ""));
   const taxRate = 0.05;
   const taxAmount = (priceNumber * taxRate).toFixed(2);
   const totalAmount = (priceNumber + Number(taxAmount)).toFixed(2);
 
+  // form fields
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
   const [cardholderName, setCardholderName] = useState("");
+  const [errors, setErrors] = useState<any>({});
 
-  const [errors, setErrors] = useState<{
-    fullName?: string;
-    email?: string;
-    cardNumber?: string;
-    expiryDate?: string;
-    cvv?: string;
-    cardholderName?: string;
-  }>({});
-
-  const handleNameChange = (
-    value: string,
-    setter: React.Dispatch<React.SetStateAction<string>>,
-  ) => {
+  // allow only letters and spaces for name fields
+  const handleNameChange = (value: string, setter: any) => {
     setter(value.replace(/[^a-zA-Z\s]/g, ""));
   };
 
+  // format card number in groups of 4
   const handleCardNumberChange = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 16);
     setCardNumber(digits.replace(/(\d{4})(?=\d)/g, "$1 "));
   };
 
+  // format expiry date as MM/YY
   const handleExpiryDateChange = (value: string) => {
     const digits = value.replace(/\D/g, "").slice(0, 4);
     setExpiryDate(
-      digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits,
+      digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits
     );
   };
 
+  // allow only 3 digits for CVV
   const handleCvvChange = (value: string) => {
     setCvv(value.replace(/\D/g, "").slice(0, 3));
   };
 
+  // check form before payment
   const validateForm = () => {
-    const newErrors: {
-      fullName?: string;
-      email?: string;
-      cardNumber?: string;
-      expiryDate?: string;
-      cvv?: string;
-      cardholderName?: string;
-    } = {};
+    const newErrors: any = {};
 
     if (!fullName.trim()) newErrors.fullName = "Full name is required";
 
-    if (!email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      newErrors.email = "Invalid email format";
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Valid email is required";
     }
 
     if (cardNumber.replace(/\s/g, "").length !== 16) {
-      newErrors.cardNumber = "Card must be 16 digits";
+      newErrors.cardNumber = "16 digits required";
     }
 
     if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
-      newErrors.expiryDate = "Format MM/YY";
+      newErrors.expiryDate = "MM/YY format required";
     }
 
-    if (cvv.length !== 3) {
-      newErrors.cvv = "CVV must be 3 digits";
-    }
+    if (cvv.length !== 3) newErrors.cvv = "3 digits required";
 
     if (!cardholderName.trim()) {
-      newErrors.cardholderName = "Cardholder name required";
+      newErrors.cardholderName = "Cardholder name is required";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // go to success page after payment
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validateForm()) {
-      router.push(
-        `/payment-success?plan=${encodeURIComponent(
-          selectedPlan,
-        )}&price=${encodeURIComponent(`$${totalAmount}`)}`,
-      );
+      const params = new URLSearchParams({
+        plan: selectedPlan,
+        price: String(priceNumber),
+        tax: taxAmount,
+        total: totalAmount,
+      });
+
+      router.push(`/payment-success?${params.toString()}`);
     }
   };
+
+  // input style
+  const inputClass = (field: string) =>
+    `w-full p-3 rounded-xl bg-[#1E252C] text-[#EEEEEE] border ${
+      errors[field] ? "border-red-500" : "border-[#00ADB5]/15"
+    } focus:outline-none focus:border-[#00ADB5] focus:ring-1 focus:ring-[#00ADB5]/40 placeholder:text-[#EEEEEE]/40`;
 
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
@@ -115,29 +112,32 @@ function PaymentContent() {
         }}
       >
         <section className="max-w-6xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* order summary */}
           <div className="bg-[#393E46]/85 rounded-2xl p-8 border-l-4 border-[#00ADB5]">
             <h2 className="text-3xl font-black text-[#00ADB5] mb-6">
               ORDER SUMMARY
             </h2>
 
-            <div className="bg-[#222831]/70 rounded-xl p-6 space-y-5">
-              <div className="flex justify-between">
-                <span className="text-[#EEEEEE]/70">Plan</span>
-                <span className="text-[#EEEEEE]">{selectedPlan}</span>
+            <div className="bg-[#1E252C] rounded-2xl p-6 space-y-5 border border-[#00ADB5]/15 shadow-inner">
+              <div className="flex justify-between text-[#EEEEEE]/80">
+                <span>Plan</span>
+                <span className="font-semibold text-[#EEEEEE]">
+                  {selectedPlan}
+                </span>
               </div>
 
-              <div className="flex justify-between">
-                <span className="text-[#EEEEEE]/70">Fee</span>
+              <div className="flex justify-between text-[#EEEEEE]/80">
+                <span>Fee</span>
                 <span className="text-[#EEEEEE]">${priceNumber}</span>
               </div>
 
-              <div className="flex justify-between">
-                <span className="text-[#EEEEEE]/70">GST (5%)</span>
+              <div className="flex justify-between text-[#EEEEEE]/80">
+                <span>GST (5%)</span>
                 <span className="text-[#EEEEEE]">${taxAmount}</span>
               </div>
 
-              <div className="border-t pt-4 flex justify-between">
-                <span className="text-[#EEEEEE] font-bold">TOTAL</span>
+              <div className="border-t border-[#EEEEEE]/10 pt-4 flex justify-between items-center">
+                <span className="font-bold text-[#EEEEEE]">TOTAL</span>
                 <span className="text-[#00ADB5] text-2xl font-black">
                   ${totalAmount}
                 </span>
@@ -145,6 +145,7 @@ function PaymentContent() {
             </div>
           </div>
 
+          {/* payment form */}
           <div className="bg-[#393E46]/85 rounded-2xl p-8 border-l-4 border-[#00ADB5]/70">
             <h2 className="text-3xl font-black text-[#00ADB5] mb-6">
               PAYMENT DETAILS
@@ -158,10 +159,10 @@ function PaymentContent() {
                     handleNameChange(e.target.value, setFullName)
                   }
                   placeholder="Full Name"
-                  className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
+                  className={inputClass("fullName")}
                 />
                 {errors.fullName && (
-                  <p className="text-red-400 text-sm mt-1">{errors.fullName}</p>
+                  <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>
                 )}
               </div>
 
@@ -170,10 +171,10 @@ function PaymentContent() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
-                  className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
+                  className={inputClass("email")}
                 />
                 {errors.email && (
-                  <p className="text-red-400 text-sm mt-1">{errors.email}</p>
+                  <p className="text-red-400 text-xs mt-1">{errors.email}</p>
                 )}
               </div>
 
@@ -181,11 +182,11 @@ function PaymentContent() {
                 <input
                   value={cardNumber}
                   onChange={(e) => handleCardNumberChange(e.target.value)}
-                  placeholder="1234 5678 9012 3456"
-                  className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
+                  placeholder="Card Number"
+                  className={inputClass("cardNumber")}
                 />
                 {errors.cardNumber && (
-                  <p className="text-red-400 text-sm mt-1">
+                  <p className="text-red-400 text-xs mt-1">
                     {errors.cardNumber}
                   </p>
                 )}
@@ -197,10 +198,10 @@ function PaymentContent() {
                     value={expiryDate}
                     onChange={(e) => handleExpiryDateChange(e.target.value)}
                     placeholder="MM/YY"
-                    className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
+                    className={inputClass("expiryDate")}
                   />
                   {errors.expiryDate && (
-                    <p className="text-red-400 text-sm mt-1">
+                    <p className="text-red-400 text-xs mt-1">
                       {errors.expiryDate}
                     </p>
                   )}
@@ -211,10 +212,10 @@ function PaymentContent() {
                     value={cvv}
                     onChange={(e) => handleCvvChange(e.target.value)}
                     placeholder="CVV"
-                    className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
+                    className={inputClass("cvv")}
                   />
                   {errors.cvv && (
-                    <p className="text-red-400 text-sm mt-1">{errors.cvv}</p>
+                    <p className="text-red-400 text-xs mt-1">{errors.cvv}</p>
                   )}
                 </div>
               </div>
@@ -226,25 +227,26 @@ function PaymentContent() {
                     handleNameChange(e.target.value, setCardholderName)
                   }
                   placeholder="Cardholder Name"
-                  className="w-full bg-[#222831]/80 border border-[#EEEEEE]/15 px-4 py-3 text-[#EEEEEE] rounded-md focus:outline-none focus:border-[#00ADB5]"
+                  className={inputClass("cardholderName")}
                 />
                 {errors.cardholderName && (
-                  <p className="text-red-400 text-sm mt-1">
+                  <p className="text-red-400 text-xs mt-1">
                     {errors.cardholderName}
                   </p>
                 )}
               </div>
 
-              <button className="w-full py-4 bg-[#00ADB5] text-[#222831] font-black rounded-md hover:bg-[#00cedb] transition-all">
+              <button
+                type="submit"
+                className="w-full py-4 bg-[#00ADB5] text-black font-black rounded-xl hover:bg-[#00c8d2] transition-all hover:-translate-y-1 shadow-[0_0_15px_rgba(0,173,181,0.3)]"
+              >
                 PAY ${totalAmount}
               </button>
             </form>
 
+            {/* back button */}
             <div className="text-center mt-4">
-              <Link
-                href="/features"
-                className="text-[#EEEEEE]/70 hover:text-[#00ADB5] transition-colors"
-              >
+              <Link href="/features" className="text-[#00ADB5] hover:underline">
                 ← Back
               </Link>
             </div>

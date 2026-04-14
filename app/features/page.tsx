@@ -1,7 +1,15 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function MembershipPage() {
+  // get selected plan from URL
+  const searchParams = useSearchParams();
+  const purchasedPlan = searchParams.get("plan");
+
+  // membership plans data
   const plans = [
     {
       name: "STARTER",
@@ -43,166 +51,93 @@ export default function MembershipPage() {
 
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
-      {/* HERO */}
       <main
-        className="flex-grow bg-cover bg-center bg-no-repeat"
+        className="flex-grow bg-cover bg-center"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(34, 40, 49, 0.82), rgba(34, 40, 49, 0.95)), url('/background.jpg')",
+            "linear-gradient(rgba(34,40,49,0.82), rgba(34,40,49,0.95)), url('/background.jpg')",
         }}
       >
         <section className="max-w-7xl mx-auto px-6 py-20 text-center">
-          <div className="mb-6">
-            <div className="w-20 h-1 bg-[#00ADB5] mx-auto rounded-full mb-8"></div>
-            <h1 className="text-5xl md:text-7xl font-black text-[#EEEEEE] tracking-tight">
-              OUR <span className="text-[#00ADB5]">MEMBERSHIP</span>
-            </h1>
-          </div>
 
-          <p className="max-w-3xl mx-auto text-lg md:text-xl text-[#EEEEEE]/80 leading-relaxed mb-16">
-            Choose the membership plan that matches your goals. From beginner
-            support to elite performance tools,{" "}
-            <span className="text-[#00ADB5] font-bold">FIT TRACK</span> helps
-            you train smarter and stay consistent.
-          </p>
+          {/* heading */}
+          <h1 className="text-5xl font-black text-[#EEEEEE] mb-12">
+            OUR <span className="text-[#00ADB5]">MEMBERSHIP</span>
+          </h1>
 
-          {/* MEMBERSHIP CARDS */}
+          {/* plans */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {plans.map((plan, index) => (
-              <div
-                key={index}
-                className={`relative bg-[#393E46]/85 backdrop-blur-sm rounded-2xl p-8 text-left shadow-2xl transition-all hover:-translate-y-2 border-l-4 ${
-                  plan.featured
-                    ? "border-[#00ADB5] scale-105 shadow-[0_0_25px_rgba(0,173,181,0.25)]"
-                    : "border-[#00ADB5]/70"
-                }`}
-              >
-                {plan.featured && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#00ADB5] text-[#222831] text-sm font-black px-4 py-2 rounded-full shadow-lg">
-                    MOST POPULAR
-                  </div>
-                )}
+            {plans.map((plan, index) => {
+              const isOwned = purchasedPlan === plan.name;
+              const isLocked = purchasedPlan && !isOwned;
 
-                <h2 className="text-3xl font-black text-[#00ADB5] mb-2 mt-4">
-                  {plan.name}
-                </h2>
-
-                <p className="text-5xl font-black text-[#EEEEEE] mb-4">
-                  {plan.price}
-                  <span className="text-lg font-medium text-[#EEEEEE]/60">
-                    /mo
-                  </span>
-                </p>
-
-                <p className="text-[#EEEEEE]/75 mb-6 leading-relaxed">
-                  {plan.subtitle}
-                </p>
-
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li
-                      key={i}
-                      className="text-[#EEEEEE]/85 flex items-start gap-3"
-                    >
-                      <span className="text-[#00ADB5] font-black">✓</span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  href="/payment"
-                  className={`block text-center w-full py-3 rounded-md font-black transition-all ${
-                    plan.featured
-                      ? "bg-[#00ADB5] text-[#222831] hover:bg-[#00cedb]"
-                      : "border border-[#00ADB5] text-[#00ADB5] hover:bg-[#00ADB5] hover:text-[#222831]"
+              return (
+                <div
+                  key={index}
+                  className={`relative bg-[#393E46]/85 rounded-2xl p-8 text-left border-l-4 transition-all ${
+                    isOwned
+                      ? "border-[#00ADB5] scale-105 shadow-[0_0_30px_rgba(0,173,181,0.4)]"
+                      : isLocked
+                      ? "opacity-40 grayscale"
+                      : "border-[#00ADB5]/70 hover:-translate-y-2"
                   }`}
                 >
-                  JOIN NOW
-                </Link>
-              </div>
-            ))}
+
+                  {/* active badge */}
+                  {isOwned && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#00ADB5] text-[#222831] px-4 py-2 rounded-full font-black">
+                      ✓ ACTIVE
+                    </div>
+                  )}
+
+                  {/* plan name */}
+                  <h2 className="text-3xl font-black text-[#00ADB5] mb-2 mt-4">
+                    {plan.name}
+                  </h2>
+
+                  {/* price */}
+                  <p className="text-5xl font-black text-[#EEEEEE] mb-4">
+                    {plan.price}
+                  </p>
+
+                  {/* subtitle */}
+                  <p className="text-[#EEEEEE]/70 mb-6">
+                    {plan.subtitle}
+                  </p>
+
+                  {/* features */}
+                  <ul className="space-y-2 mb-6">
+                    {plan.features.map((f, i) => (
+                      <li key={i} className="text-[#EEEEEE]/80">
+                        ✓ {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* button logic */}
+                  {isOwned ? (
+                    <div className="w-full py-3 bg-[#00ADB5] text-[#222831] text-center font-black rounded-md">
+                      ACTIVE
+                    </div>
+                  ) : isLocked ? (
+                    <div className="w-full py-3 border text-center rounded-md text-[#EEEEEE]/40">
+                      UNAVAILABLE
+                    </div>
+                  ) : (
+                    <Link
+                      href={`/payment?plan=${plan.name}&price=${plan.price}`}
+                      className="block w-full py-3 text-center rounded-md font-black bg-[#00ADB5] text-[#222831]"
+                    >
+                      JOIN NOW
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
           </div>
-        </section>
 
-        {/* BOTTOM CTA */}
-        <section className="max-w-4xl mx-auto px-6 pb-20 pt-6 text-center">
-          <div className="w-24 h-1 bg-[#00ADB5] mx-auto rounded-full mb-8"></div>
-          <h2 className="text-4xl md:text-5xl font-black text-[#EEEEEE] mb-6">
-            READY TO LEVEL UP?
-          </h2>
-          <p className="text-[#EEEEEE]/75 text-lg max-w-2xl mx-auto mb-10">
-            Join FIT TRACK today and unlock the tools, insights, and support you
-            need to reach your next goal.
-          </p>
-
-          <Link
-            href="/payment"
-            className="inline-block px-12 py-4 bg-[#00ADB5] text-[#222831] font-black text-lg rounded-md hover:bg-[#00cedb] hover:-translate-y-1 transition-all shadow-[0_0_20px_rgba(0,173,181,0.3)]"
-          >
-            START MEMBERSHIP
-          </Link>
         </section>
       </main>
-
-      {/* FOOTER */}
-      <footer className="bg-[#1A1F26] border-t border-[#00ADB5]/10 pt-16 pb-8 px-8">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          <div className="space-y-4">
-            <div className="text-3xl font-black text-[#EEEEEE] tracking-tighter">
-              FIT<span className="text-[#00ADB5]">TRACK</span>
-            </div>
-            <p className="text-[#EEEEEE]/50 font-light text-sm max-w-xs">
-              123 Iron Avenue, Muscle District
-              <br />
-              Steel City, SC 56789
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
-              Connect
-            </h4>
-            <div className="flex flex-col space-y-2 text-[#EEEEEE]/70 font-medium text-sm">
-              <a
-                href="tel:+15551234567"
-                className="hover:text-[#00ADB5] transition-colors"
-              >
-                +1 (555) 123-4567
-              </a>
-              <a
-                href="mailto:hello@fittrack.com"
-                className="hover:text-[#00ADB5] transition-colors"
-              >
-                hello@fittrack.com
-              </a>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <h4 className="text-[#00ADB5] font-bold text-xs uppercase tracking-widest">
-              Follow Us
-            </h4>
-            <div className="flex space-x-6">
-              {["IG", "TW", "FB", "YT"].map((social) => (
-                <Link
-                  key={social}
-                  href="#"
-                  className="text-[#EEEEEE]/50 hover:text-[#00ADB5] transition-all font-bold text-sm"
-                >
-                  {social}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center pt-8 border-t border-[#EEEEEE]/5">
-          <p className="text-[#EEEEEE]/20 text-[10px] uppercase tracking-[0.2em]">
-            © 2026 FITTRACK INTERACTIVE • DESIGNED FOR PERFORMANCE
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

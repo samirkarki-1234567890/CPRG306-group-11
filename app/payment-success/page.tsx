@@ -5,10 +5,13 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 function PaymentSuccessContent() {
+  // get values from URL
   const searchParams = useSearchParams();
 
   const selectedPlan = searchParams.get("plan") || "PRO";
-  const selectedPrice = searchParams.get("price") || "$39";
+  const price = searchParams.get("price") || "39";
+  const tax = searchParams.get("tax") || "1.95";
+  const total = searchParams.get("total") || "40.95";
 
   return (
     <div className="min-h-screen bg-[#222831] flex flex-col">
@@ -20,10 +23,13 @@ function PaymentSuccessContent() {
         }}
       >
         <div className="max-w-2xl w-full bg-[#393E46]/90 backdrop-blur-sm rounded-2xl p-10 shadow-2xl border-l-4 border-[#00ADB5] text-center">
+          
+          {/* success icon */}
           <div className="w-24 h-24 mx-auto rounded-full bg-[#00ADB5]/15 border border-[#00ADB5]/30 flex items-center justify-center mb-8">
             <span className="text-[#00ADB5] text-5xl font-black">✓</span>
           </div>
 
+          {/* heading */}
           <h1 className="text-4xl md:text-5xl font-black text-[#EEEEEE] mb-4">
             PAYMENT <span className="text-[#00ADB5]">SUCCESSFUL</span>
           </h1>
@@ -32,25 +38,39 @@ function PaymentSuccessContent() {
             Your membership payment has been completed successfully.
           </p>
 
+          {/* payment details */}
           <div className="bg-[#222831]/70 rounded-xl p-6 border border-[#00ADB5]/20 text-left space-y-4 mb-8">
             <div className="flex justify-between items-center">
               <span className="text-[#EEEEEE]/70">Selected Plan</span>
               <span className="text-[#EEEEEE] font-bold">{selectedPlan}</span>
             </div>
+
             <div className="flex justify-between items-center">
               <span className="text-[#EEEEEE]/70">Billing</span>
               <span className="text-[#EEEEEE] font-bold">Monthly</span>
             </div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-[#EEEEEE]/70">Fee</span>
+              <span className="text-[#EEEEEE] font-bold">${price}</span>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-[#EEEEEE]/70">GST (5%)</span>
+              <span className="text-[#EEEEEE] font-bold">${tax}</span>
+            </div>
+
             <div className="flex justify-between items-center border-t border-[#EEEEEE]/10 pt-4">
               <span className="text-[#EEEEEE] font-black text-lg">
                 Amount Paid
               </span>
               <span className="text-[#00ADB5] font-black text-2xl">
-                {selectedPrice}
+                ${total}
               </span>
             </div>
           </div>
 
+          {/* buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/"
@@ -58,8 +78,9 @@ function PaymentSuccessContent() {
             >
               GO TO HOME
             </Link>
+
             <Link
-              href="/features"
+              href={`/features?plan=${selectedPlan}`}
               className="px-8 py-4 border border-[#00ADB5] text-[#00ADB5] font-black rounded-md hover:bg-[#00ADB5] hover:text-[#222831] transition-all"
             >
               VIEW MEMBERSHIP
@@ -68,6 +89,7 @@ function PaymentSuccessContent() {
         </div>
       </main>
 
+      {/* footer */}
       <footer className="bg-[#1A1F26] border-t border-[#00ADB5]/10 pt-16 pb-8 px-8">
         <div className="max-w-6xl mx-auto text-center pt-8 border-t border-[#EEEEEE]/5">
           <p className="text-[#EEEEEE]/20 text-[10px] uppercase tracking-[0.2em]">
